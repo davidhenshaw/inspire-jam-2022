@@ -5,11 +5,8 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     [SerializeField] float groundSpeed = 9f;
-    [SerializeField] float airSpeed = 1f;
     [SerializeField] float playerGravity = -9.81f;
-    [SerializeField] float jumpHeight = 3f;
     Vector3 yVelocity = Vector3.zero;
-    Vector3 xzVelocity = Vector3.zero;
     [SerializeField] float downwardPushConstant = -4f;
 
     [SerializeField] Transform groundCheck;
