@@ -13,6 +13,11 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] float groundDistance = 0.4f;
     [SerializeField] LayerMask groundMask;
 
+    float _inputX;
+    float _inputY;
+
+    Vector3 _facingDirection;
+
     CharacterController _characterController;
 
     void Start()
@@ -23,25 +28,40 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isGrounded())
-            HorizontalMovement();
-
+        HandleInput();
+        HorizontalMovement();
         VerticalMovement();
     }
 
+    private void HandleInput()
+    {
+        _inputX = Input.GetAxis("Horizontal");
+        _inputY = Input.GetAxis("Vertical");
+    }
+
     //  Handles all horizontal movement
-    private Vector3 movement;
+    private Vector3 _movement;
     private void HorizontalMovement()
     {
         float moveSpeed = groundSpeed;
         float maxDistance = moveSpeed * Time.deltaTime;
 
-        float dX = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
-        float dZ = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
+        float dX = _inputX * moveSpeed * Time.deltaTime;
+        float dZ = _inputY * moveSpeed * Time.deltaTime;
 
-        movement = Vector3.ClampMagnitude(transform.forward * dZ + transform.right * dX, maxDistance);
+        _movement = Vector3.ClampMagnitude(Vector3.forward * dZ + Vector3.right * dX, maxDistance);
 
-        _characterController.Move(movement);
+        _characterController.Move(_movement);
+        FaceDir(new Vector3(_inputX, 0, _inputY));
+    }
+
+    private void FaceDir(Vector3 dir)
+    {
+        if(dir.magnitude >= 0.1f)
+            _facingDirection = dir;
+
+        var angle = Vector3.SignedAngle(transform.forward, _facingDirection, Vector3.up);
+        transform.Rotate(0, angle, 0);
     }
 
     bool isGrounded()
