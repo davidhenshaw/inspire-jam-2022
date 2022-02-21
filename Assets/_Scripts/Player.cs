@@ -5,16 +5,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    CharacterController _controller;
     Collider _pickupCollider;
     GameObject _heldObject;
     [SerializeField] float _pickupDistance;
     [SerializeField] LayerMask _pickupMask;
     [SerializeField] Transform _heldObjectTf;
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] int _hp;
+
+
+    private void Awake()
     {
-        
+        _controller = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -78,4 +81,11 @@ public class Player : MonoBehaviour
         _heldObject.transform.parent = null;
         _heldObject = null;
     }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        print("player hit");
+    }
+
+    
 }
