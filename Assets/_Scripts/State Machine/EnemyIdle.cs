@@ -8,13 +8,13 @@ public class EnemyIdle : EnemyState
 
     public override void Enter(EnemyStateManager ctx)
     {
-        Debug.Log("Start Idle");
+       //Debug.Log("Start Idle");
         ctx.StartCoroutine(DoAction_co(ctx));
     }
 
     public override void Exit(EnemyStateManager ctx)
     {
-        Debug.Log("End Idle");
+        //Debug.Log("End Idle");
     }
 
     public override void Update(EnemyStateManager ctx)

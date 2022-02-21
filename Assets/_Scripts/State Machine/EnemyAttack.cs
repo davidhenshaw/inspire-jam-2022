@@ -10,13 +10,13 @@ public class EnemyAttack : EnemyState
 
     public override void Enter(EnemyStateManager ctx)
     {
-        Debug.Log("Start Attack");
+        //Debug.Log("Start Attack");
         _target = ctx.Target;
     }
 
     public override void Exit(EnemyStateManager ctx)
     {
-        Debug.Log("End Attack");
+        //Debug.Log("End Attack");
     }
 
     public override void Update(EnemyStateManager ctx)
