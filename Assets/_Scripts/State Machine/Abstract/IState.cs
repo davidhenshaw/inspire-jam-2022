@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace metakazz.StateMachine
+namespace metakazz.FSM
 {
     /// <summary>
     /// Base interface for creating a state as part of an IStateMachine where <typeparamref name="T"/> is the type of the context passed into each state.

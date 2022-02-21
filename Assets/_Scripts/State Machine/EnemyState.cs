@@ -1,4 +1,4 @@
-﻿using metakazz.StateMachine;
+﻿using metakazz.FSM;
 using System;
 using System.Collections;
 using System.Collections.Generic;
