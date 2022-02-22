@@ -13,9 +13,15 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] float groundDistance = 0.4f;
     [SerializeField] LayerMask groundMask;
 
+    [SerializeField]
+    [Range(0, 0.90f)]
+    float _decayFactor = 0.6f;
+
     float _inputX;
     float _inputY;
 
+    private Vector3 _movement;
+    Vector3 _impulse;
     Vector3 _facingDirection;
 
     CharacterController _characterController;
@@ -29,8 +35,21 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         HandleInput();
-        HorizontalMovement();
-        VerticalMovement();
+        var horizontal = HandleHorizontalMovement();
+        var vertical = HandleVerticalMovement();
+
+        _movement = horizontal + vertical + _impulse;
+
+        _characterController.Move(_movement);
+
+        DecayImpulse();
+    }
+
+
+    public void Knockback(Vector3 dir, float force)
+    {
+        var impulse = dir * force * Time.deltaTime;
+        _impulse = impulse;
     }
 
     private void HandleInput()
@@ -39,9 +58,19 @@ public class CharacterMovement : MonoBehaviour
         _inputY = Input.GetAxis("Vertical");
     }
 
-    //  Handles all horizontal movement
-    private Vector3 _movement;
-    private void HorizontalMovement()
+    private void DecayImpulse()
+    {
+        // decay the impulse force
+        _impulse *= (1 -_decayFactor);
+        if (_impulse.magnitude < 0.01f)
+            _impulse = Vector3.zero;
+    }
+
+    /// <summary>
+    /// Returns the horizontal movement for this frame
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 HandleHorizontalMovement()
     {
         float moveSpeed = groundSpeed;
         float maxDistance = moveSpeed * Time.deltaTime;
@@ -49,10 +78,31 @@ public class CharacterMovement : MonoBehaviour
         float dX = _inputX * moveSpeed * Time.deltaTime;
         float dZ = _inputY * moveSpeed * Time.deltaTime;
 
-        _movement = Vector3.ClampMagnitude(Vector3.forward * dZ + Vector3.right * dX, maxDistance);
+        Vector3 dir = new Vector3(dX, 0, dZ).normalized;
+
+        var movement = Vector3.ClampMagnitude(Vector3.forward * dZ + Vector3.right * dX, maxDistance);
 
         _characterController.Move(_movement);
         FaceDir(new Vector3(_inputX, 0, _inputY));
+
+        return movement;
+    }
+
+    /// <summary>
+    /// Returns the vertical movement for this frame
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 HandleVerticalMovement()
+    {
+        if (isGrounded() && yVelocity.y < 0)
+        {
+            yVelocity.y = downwardPushConstant;
+        }
+
+        Vector3 initYVel = yVelocity;
+        yVelocity.y += playerGravity * Time.deltaTime;
+
+        return yVelocity * Time.deltaTime;
     }
 
     private void FaceDir(Vector3 dir)
@@ -67,20 +117,6 @@ public class CharacterMovement : MonoBehaviour
     bool isGrounded()
     {
         return Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-    }
-
-    // Handles all vertical movement
-    void VerticalMovement()
-    {
-        if (isGrounded() && yVelocity.y < 0)
-        {
-            yVelocity.y = downwardPushConstant;
-        }
-
-        Vector3 initYVel = yVelocity;
-        yVelocity.y += playerGravity * Time.deltaTime;
-
-        _characterController.Move(yVelocity * Time.deltaTime);
     }
 
 }

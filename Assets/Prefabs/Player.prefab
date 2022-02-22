@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 47287569}
   - component: {fileID: 47287572}
   - component: {fileID: 47287571}
-  - component: {fileID: 47287570}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &47287570
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 47287568}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &230318290545343646
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,9 +122,10 @@ GameObject:
   - component: {fileID: 230318290866222263}
   - component: {fileID: 230318290866222262}
   - component: {fileID: 230318290866222261}
-  - component: {fileID: 6847617733963364466}
   - component: {fileID: 230318290866222267}
+  - component: {fileID: 6847617733963364466}
   - component: {fileID: 230318290866222260}
+  - component: {fileID: 4148519074254852575}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -212,24 +199,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6847617733963364466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 230318290866222266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3af00bb46a8ba047a346c353fa3fa19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pickupDistance: 2
-  _pickupMask:
-    serializedVersion: 2
-    m_Bits: 64
-  _heldObjectTf: {fileID: 6776758204678888928}
-  _hp: 3
 --- !u!143 &230318290866222267
 CharacterController:
   m_ObjectHideFlags: 0
@@ -248,6 +217,24 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6847617733963364466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230318290866222266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3af00bb46a8ba047a346c353fa3fa19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pickupDistance: 1.5
+  _pickupMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _heldObjectTf: {fileID: 6776758204678888928}
+  _hp: 3
 --- !u!114 &230318290866222260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d4b6e24ea3e4846bb3c9eb94398b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundSpeed: 9
+  groundSpeed: 5
   playerGravity: -22.78
   downwardPushConstant: -4
   groundCheck: {fileID: 230318290545343647}
@@ -268,6 +255,22 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
+  _decayFactor: 0.069
+--- !u!114 &4148519074254852575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230318290866222266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dadb1e20cbf9df4d85e73dbbff30ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StunDuration: 1
+  RecoveryDuration: 2
+  KnockbackForce: 25
 --- !u!1 &2353360565833236473
 GameObject:
   m_ObjectHideFlags: 0

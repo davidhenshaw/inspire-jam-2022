@@ -4,7 +4,7 @@ namespace metakazz.FSM
 {
     public abstract class StateMachine<T> : MonoBehaviour where T : MonoBehaviour
     {
-        IState<T> _currState;
+        protected IState<T> _currState;
 
         /// <summary>
         /// Used to initialize the first state of the StateMachine
@@ -23,8 +23,13 @@ namespace metakazz.FSM
                 Debug.LogError("No state to update. Did you call the Init() function?", this);
         }
 
+        /// <summary>
+        /// Exits the current state and enters <paramref name="newState"/>
+        /// </summary>
+        /// <param name="newState"></param>
         public void SwitchState(IState<T> newState)
         {
+            print("entering " + newState.ToString());
             _currState.Exit(this as T);
             newState.Enter(this as T);
 

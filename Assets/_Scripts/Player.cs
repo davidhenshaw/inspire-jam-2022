@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
         _heldObject.transform.SetParent(transform);
     }
 
-    private void HandleDrop()
+    public void HandleDrop()
     {
         if (!_heldObject)
             return;
@@ -81,11 +81,4 @@ public class Player : MonoBehaviour
         _heldObject.transform.parent = null;
         _heldObject = null;
     }
-
-    private void OnParticleCollision(GameObject other)
-    {
-        print("player hit");
-    }
-
-    
 }
