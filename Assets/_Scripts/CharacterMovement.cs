@@ -31,24 +31,23 @@ public class CharacterMovement : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         HandleInput();
         var horizontal = HandleHorizontalMovement();
         var vertical = HandleVerticalMovement();
 
-        _movement = horizontal + vertical + _impulse;
+        _movement = horizontal + vertical;
 
         _characterController.Move(_movement);
+        _characterController.SimpleMove(_impulse);
 
         DecayImpulse();
     }
 
-
     public void Knockback(Vector3 dir, float force)
     {
-        var impulse = dir * force * Time.deltaTime;
+        var impulse = dir * force;
         _impulse = impulse;
     }
 
@@ -60,7 +59,7 @@ public class CharacterMovement : MonoBehaviour
 
     private void DecayImpulse()
     {
-        // decay the impulse force
+        // decay the impulse force a little every frame
         _impulse *= (1 -_decayFactor);
         if (_impulse.magnitude < 0.01f)
             _impulse = Vector3.zero;
