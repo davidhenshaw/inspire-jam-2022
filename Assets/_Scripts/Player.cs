@@ -6,10 +6,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     CharacterController _controller;
-    Collider _pickupCollider;
+    [SerializeField] Collider _pickupCollider;
     GameObject _heldObject;
     [SerializeField] float _pickupDistance;
-    [SerializeField] LayerMask _pickupMask;
+    [SerializeField] LayerMask _interactableMask;
     [SerializeField] Transform _heldObjectTf;
 
     [SerializeField] int _hp;
@@ -36,14 +36,8 @@ public class Player : MonoBehaviour
 
     private void TryPickup()
     {
-        if (_heldObject)
-        {
-            HandleDrop();
-            return;
-        }
-
         // Do a Boxcast in the direction the player is facing
-        var boxSize = new Vector3(1, 1, 1);
+        var boxSize = _pickupCollider.bounds.size;
         if(Physics.BoxCast(
             transform.position,
             boxSize,
@@ -51,19 +45,52 @@ public class Player : MonoBehaviour
             out RaycastHit hitInfo,
             transform.rotation,
             _pickupDistance,
-            _pickupMask))
+            _interactableMask))
         {
-            HandlePickup(hitInfo);
+            HandleInteraction(hitInfo);
+        }
+        else if(_heldObject)
+        {
+            HandleDrop();
         }
     }
 
-    private void HandlePickup(RaycastHit hitInfo)
+    private void HandleInteraction(RaycastHit hitInfo)
     {
-        if(hitInfo.collider.TryGetComponent<IPickup>(out IPickup pickup))
+        if (hitInfo.collider.TryGetComponent<PickupHolder>(out PickupHolder holder))
         {
-            _heldObject = hitInfo.collider.gameObject;
-            pickup.PrepareForPickup(); 
+            HandlePlace(holder);
+            return;
         }
+
+        if (hitInfo.collider.TryGetComponent<IPickup>(out IPickup pickup))
+        {
+            HandlePickup(pickup, hitInfo.collider.gameObject);
+            return;
+        }
+    }
+
+    private void HandlePlace(PickupHolder holder)
+    {
+        if(_heldObject)
+        {
+            holder.Place(_heldObject);
+            _heldObject = null;
+        }
+        else
+        {
+            var obj = holder.Take();
+            if (!obj)
+                return;
+            var pickup = _heldObject.GetComponent<IPickup>();
+            HandlePickup(pickup, obj);
+        }
+    }
+
+    private void HandlePickup(IPickup pickup, GameObject obj)
+    {
+        _heldObject = obj;
+        pickup.PrepareForPickup(); 
             
         _heldObject.transform.position = _heldObjectTf.position;
         _heldObject.transform.SetParent(transform);
