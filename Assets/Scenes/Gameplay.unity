@@ -2315,27 +2315,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _holdPos: {fileID: 573438961}
---- !u!136 &605042652
-CapsuleCollider:
+--- !u!65 &605042652
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 605042645}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 1.14
-  m_Height: 4.21
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.69, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 2.43, y: 3.97, z: 2.45}
+  m_Center: {x: 0, y: 1.41, z: 0}
 --- !u!43 &669633648
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh21030
+  m_Name: pb_Mesh21034
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2689,7 +2688,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-32498
+  m_Name: pb_Mesh21050
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3029,6 +3028,11 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!65 &2099909192 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 1748623768582340741, guid: c18fa4fc5b58fda4991a8914eff620e4, type: 3}
+  m_PrefabInstance: {fileID: 230318290932912764}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &230318290932912764
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3036,6 +3040,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 47287571, guid: c18fa4fc5b58fda4991a8914eff620e4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 68a66fb5a71f8204a8dcb613c97d1fa8, type: 3}
     - target: {fileID: 230318290866222260, guid: c18fa4fc5b58fda4991a8914eff620e4, type: 3}
       propertyPath: _decayFactor
       value: 0.061
@@ -3111,6 +3119,14 @@ PrefabInstance:
     - target: {fileID: 6776758204678888928, guid: c18fa4fc5b58fda4991a8914eff620e4, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6847617733963364466, guid: c18fa4fc5b58fda4991a8914eff620e4, type: 3}
+      propertyPath: _pickupCollider
+      value: 
+      objectReference: {fileID: 2099909192}
+    - target: {fileID: 6847617733963364466, guid: c18fa4fc5b58fda4991a8914eff620e4, type: 3}
+      propertyPath: _pickupDistance
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 8789614985711534124, guid: c18fa4fc5b58fda4991a8914eff620e4, type: 3}
       propertyPath: m_LocalPosition.y

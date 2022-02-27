@@ -30,16 +30,23 @@ public class Player : MonoBehaviour
     {
         if(Input.GetButtonDown("Fire1"))
         {
-            TryPickup();
+            TryInteraction();
         }
     }
 
-    private void TryPickup()
+    private void TryInteraction()
     {
+        Debug.DrawLine(transform.position, 
+            transform.position + transform.forward * _pickupDistance, Color.green, 2);
+
         // Do a Boxcast in the direction the player is facing
-        var boxSize = _pickupCollider.bounds.size;
+        //var boxSize = _pickupCollider.bounds.size;
+        var boxSize = _controller.bounds.size;
+        var bufferDist = 1f;
+
+        ExtDebug.DrawBoxCastBox(transform.position, boxSize, transform.rotation, transform.forward, _pickupDistance, Color.blue, 2);
         if(Physics.BoxCast(
-            transform.position,
+            transform.position - transform.forward * bufferDist,
             boxSize,
             transform.forward,
             out RaycastHit hitInfo,
@@ -82,7 +89,7 @@ public class Player : MonoBehaviour
             var obj = holder.Take();
             if (!obj)
                 return;
-            var pickup = _heldObject.GetComponent<IPickup>();
+            var pickup = obj.GetComponent<IPickup>();
             HandlePickup(pickup, obj);
         }
     }
@@ -108,4 +115,5 @@ public class Player : MonoBehaviour
         _heldObject.transform.parent = null;
         _heldObject = null;
     }
+
 }

@@ -19,7 +19,7 @@ public class PickupHolder : MonoBehaviour
         {
             _pickup = obj;
             pickup.PrepareForPickup();
-            obj.transform.position = _holdPos.position;
+            obj.transform.SetPositionAndRotation(_holdPos.position, _holdPos.rotation);
             obj.transform.parent = this.transform;
         }
         return true;
