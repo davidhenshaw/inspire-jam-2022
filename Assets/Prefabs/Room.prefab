@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1866441685704477392}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -24.413319, y: 15.292458, z: 0}
-  m_LocalScale: {x: 20, y: 20, z: 18}
+  m_LocalScale: {x: 20, y: 20, z: 8}
   m_Children: []
   m_Father: {fileID: 6908230861285737944}
   m_RootOrder: 1
@@ -48,7 +48,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1866441685704477392}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -236,7 +236,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6908230861102741463}
   m_LocalRotation: {x: 0.24184473, y: 0.66446304, z: -0.24184473, w: 0.66446304}
-  m_LocalPosition: {x: -8.913318, y: 20.792458, z: -24.65}
+  m_LocalPosition: {x: -25.48376, y: 14.016752, z: -4.149996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6908230860837488842}
@@ -294,7 +294,7 @@ MonoBehaviour:
   m_BoundingVolume: {fileID: 8566361956793260439}
   m_BoundingShape2D: {fileID: 0}
   m_ConfineScreenEdges: 1
-  m_Damping: 0.96
+  m_Damping: 0.3
 --- !u!1 &6908230861285737939
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +312,7 @@ GameObject:
   m_Layer: 3
   m_Name: Room
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
@@ -1824,3 +1824,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Vcam: {fileID: 6908230861102741465}
+  Target: {fileID: 0}
