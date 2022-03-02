@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 public class PickupHolder : MonoBehaviour
 {
     GameObject _pickup;
 
     [Tooltip("The position where the pickup will be placed when interacted with")]
     [SerializeField]Transform _holdPos;
+
+    public UnityEvent OnPlace;
+    public UnityEvent OnPickup;
 
 
     public bool Place(GameObject obj)
@@ -22,6 +25,8 @@ public class PickupHolder : MonoBehaviour
             obj.transform.SetPositionAndRotation(_holdPos.position, _holdPos.rotation);
             obj.transform.parent = this.transform;
         }
+
+        OnPlace?.Invoke();
         return true;
     }
 
@@ -38,7 +43,7 @@ public class PickupHolder : MonoBehaviour
             temp = _pickup;
             _pickup = null;
         }
-
+        OnPickup?.Invoke();
         return temp;
     }
 }

@@ -20,6 +20,10 @@ public class CharacterMovement : MonoBehaviour
     float _inputX;
     float _inputY;
 
+    /// <summary>
+    /// This transform is used to ensure the player moves in a direction relative to how the camera views them
+    /// </summary>
+    public Transform RelativeTransform;
     private Vector3 _movement;
     Vector3 _impulse;
     Vector3 _facingDirection;
@@ -29,6 +33,9 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
+
+        if (!RelativeTransform)
+            RelativeTransform = Camera.main.transform;
     }
 
     void Update()
@@ -79,10 +86,15 @@ public class CharacterMovement : MonoBehaviour
 
         Vector3 dir = new Vector3(dX, 0, dZ).normalized;
 
-        var movement = Vector3.ClampMagnitude(Vector3.forward * dZ + Vector3.right * dX, maxDistance);
+        var movement = Vector3.ClampMagnitude(RelativeTransform.forward * dZ + RelativeTransform.right * dX, maxDistance);
 
         _characterController.Move(_movement);
-        FaceDir(new Vector3(_inputX, 0, _inputY));
+
+        var inputVec = new Vector3(_inputX, 0, _inputY);
+        var relativeInputX = Vector3.Dot(inputVec, RelativeTransform.right);
+        var relativeInputZ = Vector3.Dot(inputVec, RelativeTransform.forward);
+        
+        FaceDir(new Vector3(relativeInputX, 0, relativeInputZ) * -1);
 
         return movement;
     }

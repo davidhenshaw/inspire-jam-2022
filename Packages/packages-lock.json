@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.metakazz.fsm": {
+      "version": "https://github.com/davidhenshaw/FSM.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "ca67584a89b00b2a4de2e1cd1689e559f587f089"
+    },
     "com.unity.cinemachine": {
       "version": "2.6.11",
       "depth": 0,

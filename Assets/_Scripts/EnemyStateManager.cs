@@ -18,12 +18,19 @@ public class EnemyStateManager : StateMachine<EnemyStateManager>
     void Start()
     {
         _particles = GetComponentInChildren<ParticleSystem>();
-
+        if(!Target)
+            Target = GetTarget();
         Init(Idle);
     }
 
     public void Fire()
     {
         _particles.Play();
+    }
+
+    public Transform GetTarget()
+    {
+        var tf = FindObjectOfType<Player>().transform;
+        return tf;
     }
 }
