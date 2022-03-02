@@ -3,25 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class RoomManager : MonoBehaviour
+namespace metakazz
 {
-    public CinemachineVirtualCamera Vcam;
-
-    private void Awake()
+    public class RoomManager : MonoBehaviour
     {
-        Vcam = GetComponentInChildren<CinemachineVirtualCamera>();
-    }
+        public CinemachineVirtualCamera Vcam;
+        public Transform Target;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Vcam.Priority = 10;
-    }
+        private void Awake()
+        {
+            Vcam = GetComponentInChildren<CinemachineVirtualCamera>();
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Start is called before the first frame update
+        void Start()
+        {
+            Vcam.Follow = Target;
+            //Vcam.Priority = 10;
+        }
+
+        public void SetTarget(Transform target)
+        {
+            Target = target;
+            Vcam.Follow = Target;
+        }
     }
 }
-

@@ -2,15 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : PersistentSingleton<GameManager>
+namespace metakazz
 {
-    //public GameObject StartingRoom;
-    public RoomManager[] _rooms;
-    RoomManager _currRoom;
-
-    void Start()
+    public class GameManager : PersistentSingleton<GameManager>
     {
-        _currRoom = _rooms[0];
-    }
+        //public GameObject StartingRoom;
+        public RoomManager[] _rooms;
+        public RoomManager CurrentRoom;
 
+        public Player Player;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            CurrentRoom = _rooms[0];
+            CurrentRoom.Target = Player.transform;
+        }
+
+        void Start()
+        {
+            RoomTransition.Transitioned += OnRoomTransition;
+        }
+
+        private void OnRoomTransition(RoomManager toRoom)
+        {
+            CurrentRoom = toRoom;
+            CurrentRoom.Target = Player.transform;
+        }
+    }
 }
