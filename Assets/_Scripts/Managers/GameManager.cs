@@ -4,23 +4,13 @@ using UnityEngine;
 
 public class GameManager : PersistentSingleton<GameManager>
 {
-    float _totalReceptacles;
-    float _numPoweredReceptacles = 0;
+    //public GameObject StartingRoom;
+    public RoomManager[] _rooms;
+    RoomManager _currRoom;
 
     void Start()
     {
-        
+        _currRoom = _rooms[0];
     }
 
-    void GetReceptacles()
-    {
-        var receptacles = FindObjectsOfType<PickupHolder>();
-        
-
-    }
-
-    void DisposeResources()
-    {
-        
-    }
 }
