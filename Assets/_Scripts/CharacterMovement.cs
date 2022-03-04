@@ -17,6 +17,15 @@ public class CharacterMovement : MonoBehaviour
     [Range(0, 0.90f)]
     float _decayFactor = 0.6f;
 
+    [SerializeField]
+    float _dashSpeed = 15f;
+    [SerializeField]
+    [Range(0, 1)]
+    float _dashDuration = 0.33f;
+    float _cooldownDuration = 0.5f;
+    bool _isDashing = false;
+    bool _cooldown = false;
+
     float _inputX;
     float _inputY;
 
@@ -46,6 +55,9 @@ public class CharacterMovement : MonoBehaviour
 
         _movement = horizontal + vertical;
 
+        if (_isDashing)
+            _movement = HandleDash();
+
         _characterController.Move(_movement);
         _characterController.SimpleMove(_impulse);
 
@@ -58,10 +70,30 @@ public class CharacterMovement : MonoBehaviour
         _impulse = impulse;
     }
 
+    public IEnumerator Dash_co()
+    {
+        _isDashing = true;
+        yield return new WaitForSeconds(_dashDuration);
+        _isDashing = false;
+        StartCoroutine(Cooldown_co());
+    }
+
+    IEnumerator Cooldown_co()
+    {
+        _cooldown = true;
+        yield return new WaitForSeconds(_cooldownDuration);
+        _cooldown = false;
+    }
+
     private void HandleInput()
     {
         _inputX = Input.GetAxis("Horizontal");
         _inputY = Input.GetAxis("Vertical");
+
+        if(Input.GetKeyDown(KeyCode.LeftShift) && !_isDashing && !_cooldown)
+        {
+            StartCoroutine(Dash_co());
+        }
     }
 
     private void DecayImpulse()
@@ -114,6 +146,16 @@ public class CharacterMovement : MonoBehaviour
         yVelocity.y += playerGravity * Time.deltaTime;
 
         return yVelocity * Time.deltaTime;
+    }
+
+    /// <summary>
+    /// Returns the movement this frame for a dash
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 HandleDash()
+    {
+        var result = _facingDirection * _dashSpeed * Time.deltaTime;
+        return result;
     }
 
     private void FaceDir(Vector3 dir)
